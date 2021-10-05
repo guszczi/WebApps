@@ -1,0 +1,142 @@
+body {
+    background-color: #87CEEB;
+    margin: 0;
+    border: 0;
+}
+
+.bg {
+    position: absolute;
+    top: 50%;
+    height: calc(50% - 15px);
+    width: 100%;
+    background-color: green;
+    border-top: 15px black solid;
+}
+
+.center {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.car {
+    position: relative;
+    height: 200px;
+    width: 400px;
+    margin-bottom: 200px;
+}
+
+.wheel {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgb(63, 63, 63);
+    height: 80px;
+    width: 80px;
+    bottom: 0;
+    left: 70px;
+    z-index: 2;
+}
+
+.wheel-right {
+    left: unset;
+    right: 70px;
+}
+
+.car-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.car-body div {
+    background-color: red;
+    z-index: 2;
+}
+
+.bottom {
+    position: absolute;
+    height: 25px;
+    width: 380px;
+    border-radius: 25px;
+    bottom: 30px;
+    margin-left: 10px;
+}
+
+.front-bumper {
+    position: absolute;
+    height: 75px;
+    width: 100px;
+    right: 20px;
+    bottom: 50px;
+    border-top-right-radius: 75%;
+}
+
+.back-bumper {
+    position: absolute;
+    height: 85px;
+    width: 40px;
+    bottom: 40px;
+    left: 10px;
+    border-top-left-radius: 25px;
+}
+
+.front-body {
+    position: absolute;
+    height: 80px;
+    width: 110px;
+    right: 118px;
+    bottom: 115px;
+    border-top-right-radius: 100%;
+}
+
+/* This class uses a triangle */
+.car-body .back-body {
+    position: absolute;
+    background-color: unset;
+    height: 0;
+    width: 0;
+    border-bottom: 80px solid red;
+    border-left: 90px solid transparent;
+    left: 20px;
+    bottom: 115px;
+}
+
+.fill-top {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 100px;
+    bottom: 115px;
+    border-top-left-radius: 14px;
+}
+
+.fill-center {
+    position: absolute;
+    width: 250px;
+    height: 80px;
+    left: 50px;
+    bottom: 40px;
+}
+
+.red-light {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    bottom: 60px;
+    left: 1px;
+}
+
+.car-body .yellow-light {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    bottom: 60px;
+    right: 10px;
+    background-color: yellow;
+    z-index: 0;
+}
