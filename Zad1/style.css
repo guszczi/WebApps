@@ -106,7 +106,7 @@ body {
     height: 70px;
     width: 70px;
     bottom: 0;
-    left: 70px;
+    left: 60px;
     z-index: 2;
     border: 5px solid #000;
     display: flex;
@@ -119,14 +119,14 @@ body {
     content: '';
     display: block;
     width: 75%;
-    heighT: 75%;
+    height: 75%;
     border-radius: 50%;
     background-color: #FFF3;
 }
 
 .wheel-right {
     left: unset;
-    right: 70px;
+    right: 60px;
 }
 
 .car-body {
@@ -137,7 +137,7 @@ body {
 }
 
 .car-body div {
-    background-color: red;
+    background-color: #ff2800;
     z-index: 2;
 }
 
@@ -209,13 +209,15 @@ body {
     bottom: 40px;
 }
 
-.red-light {
+.car-body .red-light {
+    background-color: #F00;
     position: absolute;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     bottom: 60px;
     left: 1px;
+    z-index: 0;
 }
 
 .car-body .yellow-light {
