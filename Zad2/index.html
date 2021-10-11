@@ -10,51 +10,64 @@
 	<script src="scripts.js"></script>
 </head>
 <body>
-	<h1>MyNotes</h1>
+	<div class="container-fluid">
+		<h1 class="center" id="logo">MyNotes</h1>
 
-	<form>
-		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="inputTitle">Title</label>
-				<input class="form-control form-control-sm" type="text" id="inputTitle" name="inputTitle" />
+		<form>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="inputTitle">Title</label>
+					<input class="form-control form-control-sm" type="text" id="inputTitle" name="inputTitle" />
+				</div>
+				<div class="form-group col-md-6">
+					<label for="inputDescription">Description</label>
+					<input class="form-control form-control-sm" type="text" id="inputDescription" name="inputDescription"/>
+				</div>
 			</div>
-			<div class="form-group col-md-6">
-				<label for="inputDescription">Description</label>
-				<input class="form-control form-control-sm" type="text" id="inputDescription" name="inputDescription"/>
+
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="inputPlace">Place</label>
+					<input class="form-control form-control-sm" type="text" id="inputPlace" name="inputPlace"/>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="inputPlace">Due date</label>
+					<input class="form-control form-control-sm" type="date" id="inputDate" name="inputDate"/>
+				</div>
+			</div>
+
+			<input type="button" value="Add" onclick="addTodo()" class="btn btn-primary btn-block"/>
+		</form>
+
+		<div>
+			<div class="form-group col-md-12">
+				<label for="inputSearch">Search</label>
+				<input class="col-md-6 form-control form-control-sm" type="text" id="inputSearch" name="inputSearch" placeholder="Type Your seach here..." />
+				<select class="col-md-6 form-select form-select-sm" aria-label="Selected search category">
+					<option value="title">Search by: Title</option>
+					<option value="description" selected>Search by: Description</option>
+					<option value="place">Search by: Place</option>
+					<option value="dueDate">Search by: Due Date</option>
+				  </select>
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="inputPlace">Place</label>
-			<input class="form-control form-control-sm" type="text" id="inputPlace" name="inputPlace"/>
+
+		<div>
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Title</th>
+						<th scope="col">Description</th>
+						<th scope="col">Place</th>
+						<th scope="col">Due Date</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody id="todoListView">
+					
+				</tbody>
+			</table>
 		</div>
-		<div class="form-group">
-			<label for="inputPlace">Due date</label>
-			<input class="form-control form-control-sm" type="date" id="inputDate" name="inputDate"/>
-		</div>
-
-		<input type="button" value="Add" onclick="addTodo()" class="btn btn-primary"/>
-	</form>
-
-	<div>
-		<label>Search</label>
-		<input type="text" id="inputSearch" placeholder="Type Your seach here..."/>
-	</div>
-
-	<div>
-		<table class="table table-bordered">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col">Title</th>
-					<th scope="col">Description</th>
-					<th scope="col">Place</th>
-					<th scope="col">Due Date</th>
-					<th scope="col">Action</th>
-				</tr>
-			</thead>
-			<tbody id="todoListView">
-				
-			</tbody>
-		</table>
 	</div>
 </body>
 </html>

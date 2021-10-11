@@ -2,6 +2,23 @@
 
 let todoList = []; //declares a new array for Your todo list
 
+let formatDate = function(value) {
+	let date = new Date(value);
+	let year = date.getFullYear();
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+
+	if (month.length < 2) {
+		month = '0' + month;
+	}
+		
+	if (day.length < 2) {
+		day = '0' + day;
+	}
+
+	return [day, month, year].join('.')
+}
+
 let updateTodoList = function() {
 	let todoListDiv = document.getElementById("todoListView");
 
@@ -24,7 +41,8 @@ let updateTodoList = function() {
 				let elementContent = document.createElement("td");
 				
 				if (key == 'dueDate') {
-					elementContent.innerHTML = value.split("T")[0]; // Make date more readable
+					// Make date more readable
+					elementContent.innerHTML = formatDate(value); 
 				}
 				else {
 					elementContent.innerHTML = value;
