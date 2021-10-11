@@ -1,35 +1,60 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="scripts.js"></script>
-    <title>MyTODO App</title>
+	<title>MyTODO App</title>
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="theme.css" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="scripts.js"></script>
 </head>
-
 <body>
-    <h1>MyNotes</h1>
-    <div id="todoListView"></div>
+	<h1>MyNotes</h1>
 
-    <form>
-        <label>Title</label>
-        <input type="text" id="inputTitle"/>
-        <label>Description</label>
-        <input type="text" id="inputDescription"/>
-        <label>Place</label>
-        <input type="text" id="inputPlace"/>
-        <label>Due date</label>
-        <input type="date" id="inputDate"/>
-        <input type="button" value="add"
-        onclick="addTodo()"/>
-    </form>
+	<form>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="inputTitle">Title</label>
+				<input class="form-control form-control-sm" type="text" id="inputTitle" name="inputTitle" />
+			</div>
+			<div class="form-group col-md-6">
+				<label for="inputDescription">Description</label>
+				<input class="form-control form-control-sm" type="text" id="inputDescription" name="inputDescription"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputPlace">Place</label>
+			<input class="form-control form-control-sm" type="text" id="inputPlace" name="inputPlace"/>
+		</div>
+		<div class="form-group">
+			<label for="inputPlace">Due date</label>
+			<input class="form-control form-control-sm" type="date" id="inputDate" name="inputDate"/>
+		</div>
 
-    <div>
-        <label>Search</label>
-        <input type="text" id="inputSearch" placeholder="Type Your seach here..."/>
-    </div>
+		<input type="button" value="Add" onclick="addTodo()" class="btn btn-primary"/>
+	</form>
+
+	<div>
+		<label>Search</label>
+		<input type="text" id="inputSearch" placeholder="Type Your seach here..."/>
+	</div>
+
+	<div>
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Title</th>
+					<th scope="col">Description</th>
+					<th scope="col">Place</th>
+					<th scope="col">Due Date</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody id="todoListView">
+				
+			</tbody>
+		</table>
+	</div>
 </body>
-
 </html>
