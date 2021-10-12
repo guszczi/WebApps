@@ -159,6 +159,7 @@ let addTodo = function() {
 	
 	if (validateTodo(newTodo))
 	{
+		newTodo.dueDate = newTodo.dueDate.toISOString();
 		//add item to the list
 		todoList.push(newTodo);
 		//window.localStorage.setItem("todos", JSON.stringify(todoList));
