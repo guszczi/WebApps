@@ -37,6 +37,27 @@ tbody input {
     width: 100%;
 }
 
+table {
+	margin-top: 10px;
+}
+
+.container-fluid {
+	position: relative;
+}
+
+.alert {
+	margin-right: var(--bs-gutter-x,.75rem);
+	position: absolute;
+	top: 0;
+	right: 0;
+	transition: all 1s ease-in-out;
+}
+
+.hidden {
+	visibility: hidden;
+	top: -100px;
+}
+
 @media (min-width: 768px) {
 	.form-row .form-group {
 		width: 50%;

@@ -17,38 +17,47 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="inputTitle">Title</label>
-					<input class="form-control form-control-sm" type="text" id="inputTitle" name="inputTitle" />
+					<input class="form-control form-control-sm" type="text" id="inputTitle" name="inputTitle" required />
 				</div>
 				<div class="form-group col-md-6">
 					<label for="inputDescription">Description</label>
-					<input class="form-control form-control-sm" type="text" id="inputDescription" name="inputDescription"/>
+					<input class="form-control form-control-sm" type="text" id="inputDescription" name="inputDescription" required />
 				</div>
 			</div>
 
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="inputPlace">Place</label>
-					<input class="form-control form-control-sm" type="text" id="inputPlace" name="inputPlace"/>
+					<input class="form-control form-control-sm" type="text" id="inputPlace" name="inputPlace" required />
 				</div>
 				<div class="form-group col-md-6">
 					<label for="inputPlace">Due date</label>
-					<input class="form-control form-control-sm" type="date" id="inputDate" name="inputDate"/>
+					<input class="form-control form-control-sm" type="date" id="inputDate" name="inputDate" required />
 				</div>
 			</div>
 
 			<input type="button" value="Add" onclick="addTodo()" class="btn btn-primary btn-block"/>
 		</form>
 
+		<div id="alert-success" class="alert alert-success hidden" role="alert"></div>
+		<div id="alert-error" class="alert alert-danger hidden" role="alert"></div>
+
 		<div>
 			<div class="form-group col-md-12">
 				<label for="inputSearch">Search</label>
-				<input class="col-md-6 form-control form-control-sm" type="text" id="inputSearch" name="inputSearch" placeholder="Type Your seach here..." />
-				<select class="col-md-6 form-select form-select-sm" aria-label="Selected search category">
-					<option value="title">Search by: Title</option>
-					<option value="description" selected>Search by: Description</option>
-					<option value="place">Search by: Place</option>
-					<option value="dueDate">Search by: Due Date</option>
-				  </select>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<input class="form-control form-control-sm" type="text" id="inputSearch" name="inputSearch" placeholder="Type Your seach here..." />
+					</div>
+					<div class="form-group col-md-6">
+						<select class="form-select form-select-sm" aria-label="Selected search category">
+							<option value="title">Search by: Title</option>
+							<option value="description" selected>Search by: Description</option>
+							<option value="place">Search by: Place</option>
+							<option value="dueDate">Search by: Due Date</option>
+						</select>
+					</div>
+				</div>
 			</div>
 		</div>
 
