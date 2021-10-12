@@ -13,7 +13,7 @@
 	<div class="container-fluid">
 		<h1 class="center" id="logo">MyNotes</h1>
 
-		<form>
+		<form id="todoForm">
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="inputTitle">Title</label>
@@ -42,20 +42,20 @@
 		<div id="alert-success" class="alert alert-success hidden" role="alert"></div>
 		<div id="alert-error" class="alert alert-danger hidden" role="alert"></div>
 
-		<div>
+		<div id="searchForm">
 			<div class="form-group col-md-12">
-				<label for="inputSearch">Search</label>
 				<div class="form-row">
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4 col-12">
+						<label for="inputSearch">Search</label>
 						<input class="form-control form-control-sm" type="text" id="inputSearch" name="inputSearch" placeholder="Type Your seach here..." />
 					</div>
-					<div class="form-group col-md-6">
-						<select class="form-select form-select-sm" aria-label="Selected search category">
-							<option value="title">Search by: Title</option>
-							<option value="description" selected>Search by: Description</option>
-							<option value="place">Search by: Place</option>
-							<option value="dueDate">Search by: Due Date</option>
-						</select>
+					<div class="form-group col-md-4 col-12">
+						<label for="inputSearch">Start date</label>
+						<input class="form-control form-control-sm" type="date" id="startDate" name="startDate" />
+					</div>
+					<div class="form-group col-md-4 col-12">
+						<label for="inputSearch">End date</label>
+						<input class="form-control form-control-sm" type="date" id="endDate" name="endDate" />
 					</div>
 				</div>
 			</div>

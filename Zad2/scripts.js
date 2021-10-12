@@ -19,15 +19,27 @@ let formatDate = function(value) {
 		day = '0' + day;
 	}
 
-	return [day, month, year].join('.')
+	return [day, month, year].join('.');
 }
 
 let isInFilterSearch = function(todo) {
 	let filterInputValue = $("#inputSearch").val();
+	let filterStartDate = $("#startDate").val();
+	let filterEndDate = $("#endDate").val();
 
-	return filterInputValue == "" ||
-		   todoList[todo].title.includes(filterInputValue) ||
-		   todoList[todo].description.includes(filterInputValue)
+	let ret = filterInputValue == "" ||
+			  todo.title.includes(filterInputValue) ||
+			  todo.description.includes(filterInputValue);
+
+	if (filterStartDate && filterEndDate) {
+		let from = Date.parse(filterStartDate);
+		let to = Date.parse(filterEndDate);
+		let date = Date.parse(todo.dueDate);
+
+		ret = ret && ((date <= to && date >= from))
+	}
+
+	return ret;
 }
 
 let updateTodoList = function() {
@@ -37,7 +49,7 @@ let updateTodoList = function() {
 	todoListDiv.empty();
 
 	//add all elements
-	for (let todo in todoList) {
+	for (let todo of todoList) {
 
 		if (!isInFilterSearch(todo)) {
 			continue
@@ -46,18 +58,10 @@ let updateTodoList = function() {
 		let newElement = $("<tr />");
 
 		// Add elements as table objects
-		for (let [key, value] of Object.entries(todoList[todo])) {
-			let elementContent = $("<td />");
-			
-			if (key == 'dueDate') {
-				elementContent.html(formatDate(value)); // Make date more readable
-			}
-			else {
-				elementContent.html(value);
-			}
-
-			newElement.append(elementContent);
-		}
+		newElement.append($("<td />").html(todo.title));
+		newElement.append($("<td />").html(todo.description));
+		newElement.append($("<td />").html(todo.place));
+		newElement.append($("<td />").html(formatDate(todo.dueDate)));
 
 		let newDeleteButtonWrapper = $("<td />").addClass('center');
 		let newDeleteButton = $("<input />").attr('type', 'button').val('Remove');
