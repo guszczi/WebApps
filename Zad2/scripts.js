@@ -11,11 +11,11 @@ let formatDate = function(value) {
 	let month = date.getMonth() + 1;
 	let day = date.getDate();
 
-	if (month.length < 2) {
+	if (month < 10) {
 		month = '0' + month;
 	}
 		
-	if (day.length < 2) {
+	if (day < 10) {
 		day = '0' + day;
 	}
 
@@ -49,24 +49,34 @@ let updateTodoList = function() {
 	todoListDiv.empty();
 
 	//add all elements
-	for (let todo of todoList) {
+	for (let todo in todoList) {
+		
+		let todoObj = todoList[todo]
 
-		if (!isInFilterSearch(todo)) {
+		// Skip empty object (JSON bit cannot be empty, so we use empty object as placeholder) 
+		if ($.isEmptyObject(todoObj)) {
+			continue
+		}
+
+		// Check if in filter
+		if (!isInFilterSearch(todoObj)) {
 			continue
 		}
 
 		let newElement = $("<tr />");
 
 		// Add elements as table objects
-		newElement.append($("<td />").html(todo.title));
-		newElement.append($("<td />").html(todo.description));
-		newElement.append($("<td />").html(todo.place));
-		newElement.append($("<td />").html(formatDate(todo.dueDate)));
+		newElement.append($("<td />").html(todoObj.title));
+		newElement.append($("<td />").html(todoObj.description));
+		newElement.append($("<td />").html(todoObj.place));
+		newElement.append($("<td />").html(formatDate(todoObj.dueDate)));
 
 		let newDeleteButtonWrapper = $("<td />").addClass('center');
 		let newDeleteButton = $("<input />").attr('type', 'button').val('Remove');
 
-		newDeleteButton.on("click", function() { deleteTodo(todo); });
+		newDeleteButton.on('click', () => {
+			deleteTodo(todo);
+		});
 
 		todoListDiv.append(newElement);
 		newElement.append(newDeleteButtonWrapper);
@@ -176,7 +186,6 @@ let readJSONbin = function() {
 			'secret-key': backendKey
 		},
 		success: (data) => {
-			console.log(data);
 			todoList = data;
 			updateTodoList();
 		},
@@ -198,7 +207,6 @@ let updateJSONbin = function() {
 		data: JSON.stringify(todoList),
 		success: (data) => {
 			showAlert('success', 'Data has been saved to JSON bin.');
-			console.log(data);
 		},
 		error: (err) => {
 			showAlert('error', 'Could not save data!');
