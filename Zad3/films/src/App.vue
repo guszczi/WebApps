@@ -6,6 +6,11 @@
 </template>
 
 <script>
+import FilmCasts from "./components/FilmCasts";
+import FilmGenres from "./components/FilmGenres";
+import Films from "./components/Films";
+import SearchEngine from "./components/SearchEngine";
+
 export default {
   name: "App",
   components: {
@@ -22,8 +27,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
