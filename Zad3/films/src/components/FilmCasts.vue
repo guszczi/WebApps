@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <h2>Filmy wg obsady</h2>
-  </div>
+    <div class="container">
+        <h1>Filmy wg obsady</h1>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "FilmCasts",
+    name: "FilmCasts",
 };
 </script>
 

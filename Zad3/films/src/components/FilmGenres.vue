@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <h2>Filmy wg gatunku</h2>
-  </div>
+    <div class="container">
+        <h1>Filmy wg gatunku</h1>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "FilmGenres",
+    name: "FilmGenres",
 };
 </script>
 
