@@ -3,27 +3,27 @@
     <h2>Baza filmów</h2>
     <form>
       <div class="form-group">
-        <label>Tytuł</label>
-        <input type="text" class="form-control" placeholder="Podaj tytuł lub fragment tytułu filmu"/>
+          <label for=inputTitle>Tytuł</label>
+          <input type="text" id=inputTitle class="form-control" placeholder="Podaj tytuł lub fragment tytułu filmu"/>
       </div>
-
-      <div class="form-group" row>
-        <label>Rok produkcji od:</label>
-        <input type="text" class="form-control" placeholder="Liczba naturalna z przedziału 1900-2019" />
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="inputProductionFrom">Rok produkcji od:</label>
+        <div class="col-sm-8">
+            <input type="text" id=inputProductionFrom class="form-control"  placeholder="Liczba naturalna z przedziału 1900-2019"/>
+        </div>
       </div>
-
-      <div class="form-group" row>
-        <label>Rok produkcji do:</label>
-        <input type="text" class="form-control" placeholder="Liczba naturalna z przedziału 1900-2019" />
+      <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="inputProductionTo">Rok produkcji do:</label>
+          <div class="col-sm-8">
+              <input type="text" id=inputProductionTo class="form-control" placeholder="Liczba naturalna z przedziału 1900-2019"/>
+          </div>
       </div>
-
       <div class="form-group">
-        <label>Obsada</label>
-        <input type="text" class="form-control" placeholder="Imię i nazwisko" />
+        <label for="inputCast">Obsada</label>
+        <input type="text" id="inputCast" class="form-control" placeholder="Imię i nazwisko"/>
       </div>
-
-      <div class="form-group">
-        <input type="button" class="btn btn-info" style="margin-top: 20px; width: 100%; color: white;" value="Szukaj" />
+      <div class="form-group row">
+          <input type="button" class="btn btn-info col-sm-12" value="Szukaj"/>
       </div>
     </form>
   </div>

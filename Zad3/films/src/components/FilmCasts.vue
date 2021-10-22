@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h2>Filmy wg obsady</h2>
   </div>
 </template>
