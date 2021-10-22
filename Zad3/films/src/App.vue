@@ -1,8 +1,8 @@
 <template>
-  <FilmCasts />
-  <FilmGenres />
-  <Films />
   <SearchEngine />
+  <Films />
+  <FilmGenres />
+  <FilmCasts />
 </template>
 
 <script>
