@@ -26,16 +26,57 @@
                 <input type="text" id="inputCast" class="form-control" placeholder="Imię i nazwisko"/>
             </div>
                 <div class="form-group row">
-                    <input type="button" class="btn btn-info col-sm-12" value="Szukaj"/>
+                    <input type="button" @click="getJsonDataList" class="btn btn-info col-sm-12" value="Szukaj"/>
                 </div>
         </form>
     </div>
 </template>
 
 <script>
-export default {
-    name: "SearchEngine",
-};
+    import {_} from 'vue-underscore';
+    import emitter from 'tiny-emitter/instance';
+    
+    export default {
+        name: "SearchEngine",
+        data() {
+            return {
+                jsonDataList: json,
+                filmsToShow: [],
+            }
+        },
+        beforeCreated() {
+            emitter.on('jsonDataEvent', jsonData => {
+                this.jsonDataList = jsonData;
+                this.filmsToShow = jsonDataList;
+            });
+        },
+        methods: {
+            searchFilms: function() {
+                _.each(this.jsonDataList, (film) => {
+                    if (film.title.includes($("input:inputTitle").val())) {
+                        this.filmsToShow.push(film);
+                    }
+                })
+
+
+                if ($("input:inputCast)" !== '') {
+                    _.each(this.jsonDataList, (film) => {
+                        if (film.cast.includes($("input:inputCast").val())) {
+                            this.filmsToShow.push(film);
+                        }
+                    }
+                }
+            },
+            
+            getJsonDataList: function() {
+                this.searchFilms();
+                if (true) {
+                    emitter.emit('404', 'Brak wyników');
+                }
+                else emitter.emit('searchDataEvent', this.filmsToShow);
+            }
+        }
+    };
 </script>
 
 <style scoped></style>
