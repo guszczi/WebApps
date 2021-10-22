@@ -1,11 +1,19 @@
 <template>
-  <h1>Hello World</h1>
+  <FilmCasts />
+  <FilmGenres />
+  <Films />
+  <SearchEngine />
 </template>
 
 <script>
 export default {
   name: "App",
-  components: {},
+  components: {
+    FilmCasts,
+    FilmGenres,
+    Films,
+    SearchEngine,
+  },
 };
 </script>
 
