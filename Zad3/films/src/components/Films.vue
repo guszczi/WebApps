@@ -41,7 +41,7 @@
         }
         },
         created() {
-            this.filmsToShow = _.first(json, 10); // there two lines are slowing the app i guess because of assigning large json file twice
+            this.initFilms(json); // there two lines are slowing the app i guess because of assigning large json file twice
             this.dataSent = json; // when we launch the app, without these lines this.filmsToShow and this.dataSent are empty
             // so when we dont click 'search' button our table is empty because there is no data to display
             emitter.on('searchDataEvent', films => { // reading data sent by searchengine (filtered data)
