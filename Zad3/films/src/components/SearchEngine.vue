@@ -53,7 +53,6 @@
         created() {
             emitter.on('jsonDataEvent', jsonData => {
                 this.jsonDataList = jsonData;
-                this.filmsToShow = [...this.jsonDataList];
             });
         },
         methods: {
@@ -100,9 +99,8 @@
             
             getJsonDataList: function() {
                 this.searchFilms();
-                if (_.size(this.filmsToShow) === 0) {
+                if (!_.size(this.filmsToShow)) {
                     emitter.emit('404', 'Brak wyników');
-                    this.filmsToShow = this.jsonDataList;
                 }
                 else emitter.emit('searchDataEvent', this.filmsToShow);
             }

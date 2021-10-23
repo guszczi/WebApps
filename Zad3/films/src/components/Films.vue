@@ -36,17 +36,19 @@
             return {
             jsonDataList: json, // loaded json file
             filmsToShow: [], // films that are being displayed in table (usually 10 at a time)
-            dataSent: [], // films sent by searcher (to help showMore function get more than 10 films)
-            buttonVisible: true // displaying show more button
+            dataSent: [], // films sent by searcher (to help showMore function load more than 10 films)
+            buttonVisible: true // displaying 'show more' button
         }
         },
         created() {
-            this.filmsToShow = this.jsonDataList;
-            this.dataSent = this.jsonDataList;
-            emitter.on('searchDataEvent', films => {
+            this.filmsToShow = _.first(json, 10); // there two lines are slowing the app i guess because of assigning large json file twice
+            this.dataSent = json; // when we launch the app, without these lines this.filmsToShow and this.dataSent are empty
+            // so when we dont click 'search' button our table is empty because there is no data to display
+            emitter.on('searchDataEvent', films => { // reading data sent by searchengine (filtered data)
                 this.dataSent = films;
                 this.filmsToShow = films;
                 this.initFilms(this.filmsToShow);
+                
                 if (_.size(films) < 10) this.buttonVisible = false;
                 else this.buttonVisible = true;
             });
@@ -55,13 +57,16 @@
             });
         },
         methods: {
+            
             initFilms: function(filmsToShow) {
                 this.filmsToShow = _.first(filmsToShow, 10);
             },
+            
             showMore: function(currentlyDisplayed) {
                 let currentAmount = _.size(currentlyDisplayed);
                 this.filmsToShow = _.first(this.dataSent, currentAmount + 10);
             },
+            
             getJsonDataList: function() {
                 emitter.emit('jsonDataEvent', this.jsonDataList);
             }
