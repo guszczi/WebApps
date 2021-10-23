@@ -39,9 +39,18 @@
         }
         },
         created() {
-            this.filmsToShow = _.first(this.jsonDataList, 10);
+            emitter.on('searchDataEvent', films => {
+                this.filmsToShow = films;
+                this.initFilms(this.filmsToShow);
+            });
+            emitter.on('404', () => {
+                this.filmsToShow = [];
+            });
         },
         methods: {
+            initFilms: function(currentlyDisplayed) {
+                this.filmsToShow = _.first(currentlyDisplayed, 10);
+            },
             showMore: function(currentlyDisplayed) {
                 let currentAmount = _.size(currentlyDisplayed);
                 this.filmsToShow = _.first(this.jsonDataList, currentAmount + 10);
@@ -51,6 +60,7 @@
             }
         },
         mounted() {
+            this.initFilms();
             this.getJsonDataList();
         }
     };

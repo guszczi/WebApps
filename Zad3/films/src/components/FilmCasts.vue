@@ -32,7 +32,7 @@
             readCasts: function() {
                 _.each(this.filmsToShow, (film) => {
                     _.each(film.cast, (cast) => {
-                        if (!this.casts.includes(cast)) {
+                        if (!_.contains(this.casts, cast)) {
                             this.casts.push(cast);
                         }
                     }
@@ -43,7 +43,7 @@
             combineCastsAndFilms: function(cast) {
                 var result = []
                 _.each(this.filmsToShow, (film) => {
-                    if (film.cast.includes(cast) === true) {
+                    if (_.contains(film.cast, cast) === true) {
                         result.push(film);
                     }
                 })

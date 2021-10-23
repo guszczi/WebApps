@@ -43,7 +43,7 @@
             combineGenresAndFilms: function(genre) {
                 var result = []
                 _.each(this.filmsToShow, (film) => {
-                    if (film.genres.includes(genre) === true) {
+                    if (_.contains(film.genres, genre) === true) {
                         result.push(film);
                     }
                 })
