@@ -20,7 +20,7 @@
         </table>
 
         <div class="float-right">
-            <button class="btn btn-link btn-sm" v-on:click="showMore(filmsToShow, jsonDataList)">Pokaż więcej</button>
+            <button class="btn btn-link btn-sm" v-on:click="showMore(filmsToShow)">Pokaż więcej</button>
         </div>
     </div>
 </template>
@@ -43,24 +43,25 @@
                 this.filmsToShow = films;
                 this.initFilms(this.filmsToShow);
             });
-            emitter.on('404', () => {
-                this.filmsToShow = [];
+            emitter.on('404', x => {
+                console.log("jestem tu");
+                this.filmsToShow.push(x);
             });
         },
         methods: {
-            initFilms: function(currentlyDisplayed) {
-                this.filmsToShow = _.first(currentlyDisplayed, 10);
+            initFilms: function(filmsToShow) {
+                this.filmsToShow = _.first(filmsToShow, 10);
             },
             showMore: function(currentlyDisplayed) {
                 let currentAmount = _.size(currentlyDisplayed);
-                this.filmsToShow = _.first(this.jsonDataList, currentAmount + 10);
+                this.filmsToShow = _.first(this.filmsToShow, currentAmount + 10);
             },
             getJsonDataList: function() {
                 emitter.emit('jsonDataEvent', this.jsonDataList);
             }
         },
         mounted() {
-            this.initFilms();
+            this.initFilms(this.filmsToShow);
             this.getJsonDataList();
         }
     };

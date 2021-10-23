@@ -46,7 +46,7 @@
                     yearTo: '',
                     cast: ''
                 },
-                jsonDataList: [],
+                jsonDataList: {},
                 filmsToShow: [],
             }
         },
@@ -54,24 +54,44 @@
             emitter.on('jsonDataEvent', jsonData => {
                 this.jsonDataList = jsonData;
                 this.filmsToShow = [...this.jsonDataList];
+                console.log(this.jsonDataList);
+                console.log(this.filmsToShow);
             });
         },
         methods: {
             searchFilms: function() {
-                this.filmsToShow = [];
-                _.each(this.jsonDataList, (film) => {
-                    if (_.contains(film.title, this.film.title)) {
-                        this.filmsToShow.push(film);
-                    }
-                })
-
-
-                if (this.film.cast !== '') {
-                    console.log("udalo sie");
+                let tmp = [];
+                
+                if (this.film.title !== "") {
+                    this.filmsToShow = [];
                     _.each(this.jsonDataList, (film) => {
-                        if (_.contains(film.cast, this.film.cast)) {
+                        if (film.title.includes(this.film.title)) {
                             this.filmsToShow.push(film);
                         }
+                    })
+                }
+                
+
+                if (this.film.yearTo !== undefined || this.film.yearFrom !== undefined) {
+                    tmp = [...this.filmsToShow];
+                    this.filmsToShow = [];
+
+                    _.each(tmp, (film) => {
+                        if ((film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo)) {
+                            this.filmsToShow.push(film);
+                        }
+                    });
+                }
+
+                if (this.film.cast !== "") {
+                    tmp = [...this.filmsToShow];
+                    this.filmsToShow = [];
+                    _.each(tmp, (film) => {
+                        _.each(film.cast, (cast) => {
+                            if (cast.includes(this.film.cast)) {
+                                this.filmsToShow.push(film);
+                            }
+                        })
                     })
                 }
                 console.log(this.filmsToShow);
