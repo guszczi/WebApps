@@ -54,12 +54,11 @@
             emitter.on('jsonDataEvent', jsonData => {
                 this.jsonDataList = jsonData;
                 this.filmsToShow = [...this.jsonDataList];
-                console.log(this.jsonDataList);
-                console.log(this.filmsToShow);
             });
         },
         methods: {
-            searchFilms: function() {
+            searchFilms: function() {         
+                this.filmsToShow = [...this.jsonDataList];
                 let tmp = [];
                 
                 if (this.film.title !== "") {
@@ -72,9 +71,12 @@
                 }
                 
 
-                if (this.film.yearTo !== undefined || this.film.yearFrom !== undefined) {
+                if (this.film.yearFrom !== undefined || this.film.yearTo !== undefined) {
                     tmp = [...this.filmsToShow];
                     this.filmsToShow = [];
+
+                    if (_.isEqual(this.film.yearFrom, '')) this.film.yearFrom = 1900;
+                    if (_.isEqual(this.film.yearTo, '')) this.film.yearTo = 2019;
 
                     _.each(tmp, (film) => {
                         if ((film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo)) {
@@ -94,7 +96,6 @@
                         })
                     })
                 }
-                console.log(this.filmsToShow);
             },
             
             getJsonDataList: function() {

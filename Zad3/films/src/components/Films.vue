@@ -36,16 +36,18 @@
             return {
             jsonDataList: json,
             filmsToShow: [],
+            dataSent: [],
         }
         },
         created() {
+            this.filmsToShow = json;
             emitter.on('searchDataEvent', films => {
+                this.dataSent = films;
                 this.filmsToShow = films;
                 this.initFilms(this.filmsToShow);
             });
             emitter.on('404', x => {
-                console.log("jestem tu");
-                this.filmsToShow.push(x);
+                alert(x);
             });
         },
         methods: {
@@ -54,7 +56,7 @@
             },
             showMore: function(currentlyDisplayed) {
                 let currentAmount = _.size(currentlyDisplayed);
-                this.filmsToShow = _.first(this.filmsToShow, currentAmount + 10);
+                this.filmsToShow = _.first(this.dataSent, currentAmount + 10);
             },
             getJsonDataList: function() {
                 emitter.emit('jsonDataEvent', this.jsonDataList);
