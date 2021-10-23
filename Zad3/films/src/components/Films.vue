@@ -19,7 +19,7 @@
             </tbody>
         </table>
 
-        <div class="float-right">
+        <div class="float-right" v-if="buttonVisible"> 
             <button class="btn btn-link btn-sm" v-on:click="showMore(filmsToShow)">Pokaż więcej</button>
         </div>
     </div>
@@ -34,17 +34,21 @@
         name: "Films",
         data() { 
             return {
-            jsonDataList: json,
-            filmsToShow: [],
-            dataSent: [],
+            jsonDataList: json, // loaded json file
+            filmsToShow: [], // films that are being displayed in table (usually 10 at a time)
+            dataSent: [], // films sent by searcher (to help showMore function get more than 10 films)
+            buttonVisible: true // displaying show more button
         }
         },
         created() {
-            this.filmsToShow = json;
+            this.filmsToShow = this.jsonDataList;
+            this.dataSent = this.jsonDataList;
             emitter.on('searchDataEvent', films => {
                 this.dataSent = films;
                 this.filmsToShow = films;
                 this.initFilms(this.filmsToShow);
+                if (_.size(films) < 10) this.buttonVisible = false;
+                else this.buttonVisible = true;
             });
             emitter.on('404', x => {
                 alert(x);
