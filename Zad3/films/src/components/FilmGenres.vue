@@ -35,19 +35,14 @@
                         if (!this.genres.includes(genre)) {
                             this.genres.push(genre);
                         }
-                    }
-                    )
+                    })
                 })
             },
             
             combineGenresAndFilms: function(genre) {
-                var result = []
-                _.each(this.filmsToShow, (film) => {
-                    if (_.contains(film.genres, genre) === true) {
-                        result.push(film);
-                    }
+                return _.filter(this.filmsToShow, (film) => {
+                    return _.contains(film.genres, genre)
                 })
-                return result;
             }
         },
         mounted() {

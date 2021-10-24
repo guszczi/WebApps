@@ -18,8 +18,8 @@ export default {
         FilmGenres,
         Films,
         SearchEngine,
-        },
-    };
+    },
+};
 </script>
 
 <style>

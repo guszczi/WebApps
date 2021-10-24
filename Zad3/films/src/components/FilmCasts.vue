@@ -35,19 +35,14 @@
                         if (!_.contains(this.casts, cast)) {
                             this.casts.push(cast);
                         }
-                    }
-                    )
+                    })
                 })
             },
             
             combineCastsAndFilms: function(cast) {
-                var result = []
-                _.each(this.filmsToShow, (film) => {
-                    if (_.contains(film.cast, cast) === true) {
-                        result.push(film);
-                    }
+                return _.filter(this.filmsToShow, (film) => {
+                    return _.contains(film.cast, cast)
                 })
-                return result;
             }
         },
         mounted() {

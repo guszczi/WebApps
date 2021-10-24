@@ -34,11 +34,11 @@
         name: "Films",
         data() { 
             return {
-            jsonDataList: json, // loaded json file
-            filmsToShow: [], // films that are being displayed in table (usually 10 at a time)
-            dataSent: [], // films sent by searcher (to help showMore function load more than 10 films)
-            buttonVisible: true // displaying 'show more' button
-        }
+                jsonDataList: json, // loaded json file
+                filmsToShow: [], // films that are being displayed in table (usually 10 at a time)
+                dataSent: [], // films sent by searcher (to help showMore function load more than 10 films)
+                buttonVisible: true // displaying 'show more' button
+            }
         },
         created() {
             this.initFilms(json); // there two lines are slowing the app i guess because of assigning large json file twice
