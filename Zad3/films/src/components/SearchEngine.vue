@@ -57,28 +57,30 @@
         },
         methods: {
             searchFilms: function() {         
-                this.filmsToShow = [...this.jsonDataList];
-                
-                if (this.film.title !== "") {
-                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
-                        return film.title.includes(this.film.title);
-                    })
-                }
-
                 if (this.film.yearFrom !== undefined || this.film.yearTo !== undefined) {
                     if (_.isEqual(this.film.yearFrom, '')) this.film.yearFrom = 1900;
                     if (_.isEqual(this.film.yearTo, '')) this.film.yearTo = 2019;
-
-                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
-                        return (film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo);
-                    });
                 }
 
-                if (this.film.cast !== "") {
-                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
-                        return film.cast.join(' ').includes(this.film.cast);
-                    })
-                }
+                this.filmsToShow = _.filter(this.jsonDataList, (film) => {
+                    if (_.isEmpty(this.film.title) && _.isEmpty(this.film.cast)) {
+                        return true;
+                    }
+                    else {
+                        let shouldReturn = (film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo);
+
+                        if (this.film.title !== "") {
+                            shouldReturn &= film.title.includes(this.film.title);
+                        }
+
+                        if (this.film.cast !== "") {
+                            shouldReturn &= film.cast.join(' ').includes(this.film.cast);
+                        }
+
+                        return shouldReturn;
+                    }
+                })
+                console.log 
             },
             
             getJsonDataList: function() {
