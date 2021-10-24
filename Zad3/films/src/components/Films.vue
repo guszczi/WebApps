@@ -65,6 +65,14 @@
             showMore: function(currentlyDisplayed) {
                 let currentAmount = _.size(currentlyDisplayed);
                 this.filmsToShow = _.first(this.dataSent, currentAmount + 10);
+
+                // Hide button if no more results
+                if (currentAmount + 10 >= _.size(this.dataSent)) {
+                    this.buttonVisible = false;
+                }
+                else {
+                    this.buttonVisible = true;
+                }
             },
             
             getJsonDataList: function() {
