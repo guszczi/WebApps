@@ -76,7 +76,7 @@
 
                 if (this.film.cast !== "") {
                     this.filmsToShow = _.filter(this.filmsToShow, (film) => {
-                        return film.cast.includes(this.film.cast);
+                        return film.cast.join(' ').includes(this.film.cast);
                     })
                 }
             },
