@@ -58,41 +58,25 @@
         methods: {
             searchFilms: function() {         
                 this.filmsToShow = [...this.jsonDataList];
-                let tmp = [];
                 
                 if (this.film.title !== "") {
-                    this.filmsToShow = [];
-                    _.each(this.jsonDataList, (film) => {
-                        if (film.title.includes(this.film.title)) {
-                            this.filmsToShow.push(film);
-                        }
+                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
+                        return film.title.includes(this.film.title);
                     })
                 }
-                
 
                 if (this.film.yearFrom !== undefined || this.film.yearTo !== undefined) {
-                    tmp = [...this.filmsToShow];
-                    this.filmsToShow = [];
-
                     if (_.isEqual(this.film.yearFrom, '')) this.film.yearFrom = 1900;
                     if (_.isEqual(this.film.yearTo, '')) this.film.yearTo = 2019;
 
-                    _.each(tmp, (film) => {
-                        if ((film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo)) {
-                            this.filmsToShow.push(film);
-                        }
+                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
+                        return (film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo);
                     });
                 }
 
                 if (this.film.cast !== "") {
-                    tmp = [...this.filmsToShow];
-                    this.filmsToShow = [];
-                    _.each(tmp, (film) => {
-                        _.each(film.cast, (cast) => {
-                            if (cast.includes(this.film.cast)) {
-                                this.filmsToShow.push(film);
-                            }
-                        })
+                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
+                        return film.cast.includes(this.film.cast);
                     })
                 }
             },
