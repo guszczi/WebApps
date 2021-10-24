@@ -56,10 +56,11 @@
             });
         },
         methods: {
-            searchFilms: function() { 
-                this.filmsToShow = [];
+            searchFilms: function() {         
+                this.filmsToShow = [...this.jsonDataList];
+                
                 if (this.film.title !== "") {
-                    this.filmsToShow = _.filter(this.jsonDataList, (film) => {
+                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
                         return film.title.includes(this.film.title);
                     })
                 }
@@ -68,39 +69,24 @@
                     if (_.isEqual(this.film.yearFrom, '')) this.film.yearFrom = 1900;
                     if (_.isEqual(this.film.yearTo, '')) this.film.yearTo = 2019;
 
-                    if (!_.size(this.filmsToShow) && !this.film.title)
-                        this.filmsToShow = _.filter(this.jsonDataList, (film) => {
-                            return (film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo);
-                        });
-                    else    
-                        this.filmsToShow = _.filter(this.filmsToShow, (film) => {
-                            return (film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo);
-                        });
+                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
+                        return (film.year >= this.film.yearFrom) && (film.year <= this.film.yearTo);
+                    });
                 }
 
                 if (this.film.cast !== "") {
-                    if (!_.size(this.filmsToShow) && !this.film.cast)
-                        this.filmsToShow = _.filter(this.jsonDataList, (film) => {
-                            return film.cast.join(' ').includes(this.film.cast);
-                        })
-                    else 
-                        this.filmsToShow = _.filter(this.filmsToShow, (film) => {
-                            return film.cast.join(' ').includes(this.film.cast);
-                        })
+                    this.filmsToShow = _.filter(this.filmsToShow, (film) => {
+                        return film.cast.join(' ').includes(this.film.cast);
+                    })
                 }
             },
             
             getJsonDataList: function() {
                 this.searchFilms();
                 if (!_.size(this.filmsToShow)) {
-                    emitter.emit('404', 'Nie znaleziono filmow!');
+                    emitter.emit('404', 'Brak wyników');
                 }
-                else if (!this.film.title && !this.film.cast) {
-                    emitter.emit('searchDataEvent', this.jsonDataList);
-                }
-                else {
-                    emitter.emit('searchDataEvent', this.filmsToShow);
-                } 
+                else emitter.emit('searchDataEvent', this.filmsToShow);
             }
         }
     };
