@@ -1,10 +1,35 @@
 const router = require('express').Router();
 
 const db = require('../models/database');
-const products = require('../models/products');
+const Products = require('../models/products');
+
+const Categories = require('../models/categories');
+
+const getProduct = (id, res) => {
+    Products.findOne({
+        attributes: {
+            exclude: ['category_id']
+        },
+        where: { product_id: id },
+        include: [{
+            model: Categories,
+        }]
+    }).then(products => {
+        res.send(products);
+    }).catch(err => {
+        res.status(500).send({ error: err });
+    });
+}
 
 router.get('/products', (req, res) => {
-    products.findAll().then(products => {
+    Products.findAll({
+        attributes: {
+            exclude: ['category_id']
+        },
+        include: [{
+            model: Categories,
+        }]
+    }).then(products => {
         res.send(products);
     }).catch(err => {
         res.status(500).send({ error: err });
@@ -12,31 +37,29 @@ router.get('/products', (req, res) => {
 })
 
 router.get('/products/:id', (req, res) => {
-    products.findByPk(req.params.id).then(products => {
-        res.send(products);
-    }).catch(err => {
-        res.status(500).send({ error: err });
-    });
+    getProduct(req.params.id, res);
 })
 
 router.post('/products', (req, res) => {
-    products.create({
+    // TODO: validate
+
+    Products.create({
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
         weight: req.body.weight,
         category_id: req.body.category_id
     }).then(product => {
-        res.send(product);
+        getProduct(product.product_id, res);
     }).catch(err => {
         res.status(400).send({ error: err });
     });
 })
 
 router.put('/products/:id', (req, res) => {
-    console.log(req.params.id);
+    // TODO: validate
 
-    products.update(req.body, {
+    Products.update(req.body, {
         where: { product_id: req.params.id }
     }).then(num => {
         if (num == 1) {

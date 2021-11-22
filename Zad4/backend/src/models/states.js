@@ -13,4 +13,4 @@ States.sync().then(() => {
     States.create({ state_id: 4, name: 'Completed' }).catch(err => {});
 });
 
-module.exports = states;
+module.exports = States;
