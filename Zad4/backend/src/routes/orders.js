@@ -4,6 +4,22 @@ const db = require('../models/database');
 const Orders = require('../models/orders');
 const States = require('../models/states');
 
+const getOrder = (id, res) => {
+    Orders.findOne({
+        where: { order_id: id },
+        attributes: {
+            exclude: ['state_id']
+        },
+        include: [{
+            model: States
+        }]
+    }).then(orders => {
+        res.send(orders);
+    }).catch(err => {
+        res.status(500).send({ error: err });
+    });
+}
+
 router.get('/orders', (req, res) => {
     Orders.findAll({
         attributes: {
@@ -14,32 +30,18 @@ router.get('/orders', (req, res) => {
         }]
     }).then(orders => {
         res.send(orders);
-    })//.catch(err => {
-    //    res.status(500).send({ error: err });
-    //});
+    }).catch(err => {
+        res.status(500).send({ error: err });
+    });
 })
 
 router.get('/orders/:id', (req, res) => {
-    Orders.findAll({
-        where: { order_id: req.params.id }
-    }).then(orders => {
-        res.send(orders);
-    }).catch(err => {
-        res.status(500).send({ error: err });
-    });
-})
-
-router.get('/orders/:id/:state', (req, res) => {
-    Orders.findAll({
-        where: { order_id: req.params.id, state: req.params.state }
-    }).then(orders => {
-        res.send(orders);
-    }).catch(err => {
-        res.status(500).send({ error: err });
-    });
+    getOrder(req.params.id, res);
 })
 
 router.post('/orders', (req, res) => {
+    // TODO: validate
+
     Orders.create({
         date: req.body.date,
         state_id: req.body.state_id,
@@ -47,14 +49,15 @@ router.post('/orders', (req, res) => {
         email: req.body.email,
         phone: req.body.phone
     }).then(order => {
-        res.send(order);
+        getOrder(order.order_id, res);
     }).catch(err => {
         res.status(400).send({ error: err });
     });
 })
 
+// TODO: fix and validate
 router.put('/orders/:id/:state', (req, res) => {
-    Orders.update({ state: req.params.state }, {
+    Orders.update({ state_id: req.params.state_id }, {
         where: { order_id: req.params.id }
     }).then(num => {
         if (num == 1) {
