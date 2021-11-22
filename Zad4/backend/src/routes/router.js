@@ -1,7 +1,5 @@
 const router = require('express').Router();
 
-
-// You can require and use your routes here ;)
-
+router.use('/', require('./products'));
 
 module.exports = router;

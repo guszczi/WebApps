@@ -6,8 +6,6 @@ const {
     DB_PASSWORD
 } = process.env;
 
-
-
 const Sequelize = require('sequelize');
 
 const db = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
@@ -18,7 +16,7 @@ const db = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
         acquire: 30000,
         idle: 10000
     },
-    dialect: mysql,
+    dialect: 'mysql',
     dialectOptions: {
         options: {
             useUTC: false,
