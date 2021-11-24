@@ -5,7 +5,7 @@ const States = require('./states');
 
 const Orders = db.define('orders', {
     order_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    date: { type: Sequelize.STRING, allowNull: true },
+    date: { type: Sequelize.DATE, allowNull: true },
     state_id: { type: Sequelize.INTEGER, allowNull: false, references: { model: 'states', key: 'state_id' } },
     username: { type: Sequelize.STRING, allowNull: false },
     email: { type: Sequelize.STRING, allowNull: false, validate: { isEmail: true } },

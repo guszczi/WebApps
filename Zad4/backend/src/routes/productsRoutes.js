@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 const router = require('express').Router();
 
 const db = require('../models/database');
@@ -17,7 +19,8 @@ const getProduct = (id, res) => {
     }).then(products => {
         res.send(products);
     }).catch(err => {
-        res.status(500).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 }
 
@@ -32,7 +35,8 @@ router.get('/products', (req, res) => {
     }).then(products => {
         res.send(products);
     }).catch(err => {
-        res.status(500).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 
@@ -41,8 +45,6 @@ router.get('/products/:id', (req, res) => {
 })
 
 router.post('/products', (req, res) => {
-    // TODO: validate
-
     Products.create({
         name: req.body.name,
         description: req.body.description,
@@ -52,24 +54,42 @@ router.post('/products', (req, res) => {
     }).then(product => {
         getProduct(product.product_id, res);
     }).catch(err => {
-        res.status(400).send({ error: err });
+        if (err instanceof Sequelize.ForeignKeyConstraintError) {
+            res.status(400).send({ error: `Category with id=${req.body.category_id} does not exist` });
+            return;
+        }
+        else if (err instanceof Sequelize.ValidationError) {
+            res.status(400).send({ error: err.errors[0].message });
+            return;
+        }
+
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 
 router.put('/products/:id', (req, res) => {
-    // TODO: validate
-
     Products.update(req.body, {
         where: { product_id: req.params.id }
     }).then(num => {
         if (num == 1) {
-            res.send({ message: 'Product updated' });
+            getProduct(req.params.id, res);
         }
         else {
             res.send({ message: 'Product not found or there is nothing to change' });
         }
     }).catch(err => {
-        res.status(500).send({ error: err });
+        if (err instanceof Sequelize.SequelizeForeignKeyConstraintError) {
+            res.status(400).send({ error: `Category with id=${req.body.category_id} does not exist` });
+            return;
+        }
+        else if (err instanceof Sequelize.SequelizeValidationError) {
+            res.status(400).send({ error: errorHandler.getValidationErrorMessage(err) });
+            return;
+        }
+
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 

@@ -27,13 +27,13 @@ CREATE TABLE `aji`.`products`(
 CREATE TABLE `aji`.`orders`( 
     `order_id` INT NOT NULL AUTO_INCREMENT, 
     `date` DATE, 
-    `state` INT NOT NULL, 
+    `state_id` INT NOT NULL, 
     `username` TEXT NOT NULL,
     `email` TEXT NOT NULL,
     `phone` TEXT NOT NULL,
     
     PRIMARY KEY (`order_id`),
-    FOREIGN KEY (`state`) REFERENCES `states`(`state_id`)
+    FOREIGN KEY (`state_id`) REFERENCES `states`(`state_id`)
 )
 
 CREATE TABLE `aji`.`orders_lists`( 

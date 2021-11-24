@@ -16,7 +16,8 @@ const getOrder = (id, res) => {
     }).then(orders => {
         res.send(orders);
     }).catch(err => {
-        res.status(500).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 }
 
@@ -31,7 +32,8 @@ router.get('/orders', (req, res) => {
     }).then(orders => {
         res.send(orders);
     }).catch(err => {
-        res.status(500).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 
@@ -40,8 +42,6 @@ router.get('/orders/:id', (req, res) => {
 })
 
 router.post('/orders', (req, res) => {
-    // TODO: validate
-
     Orders.create({
         date: req.body.date,
         state_id: req.body.state_id,
@@ -51,11 +51,12 @@ router.post('/orders', (req, res) => {
     }).then(order => {
         getOrder(order.order_id, res);
     }).catch(err => {
-        res.status(400).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 
-// TODO: fix and validate
+// TODO: fix
 router.put('/orders/:id/:state', (req, res) => {
     Orders.update({ state_id: req.params.state_id }, {
         where: { order_id: req.params.id }
@@ -67,7 +68,8 @@ router.put('/orders/:id/:state', (req, res) => {
             res.send({ message: 'Order not found or there is nothing to change' });
         }
     }).catch(err => {
-        res.status(500).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 

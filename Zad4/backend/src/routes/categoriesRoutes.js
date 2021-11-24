@@ -7,7 +7,8 @@ router.get('/categories', (req, res) => {
     categories.findAll().then(categories => {
         res.send(categories);
     }).catch(err => {
-        res.status(500).send({ error: err });
+        console.error(err);
+        res.status(500).send({ error: "Server error" });
     });
 })
 
