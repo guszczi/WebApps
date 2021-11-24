@@ -79,15 +79,15 @@ router.put('/products/:id', (req, res) => {
             res.send({ message: 'Product not found or there is nothing to change' });
         }
     }).catch(err => {
-        if (err instanceof Sequelize.SequelizeForeignKeyConstraintError) {
+        if (err instanceof Sequelize.ForeignKeyConstraintError) {
             res.status(400).send({ error: `Category with id=${req.body.category_id} does not exist` });
             return;
         }
-        else if (err instanceof Sequelize.SequelizeValidationError) {
-            res.status(400).send({ error: errorHandler.getValidationErrorMessage(err) });
+        else if (err instanceof Sequelize.ValidationError) {
+            res.status(400).send({ error: err.errors[0].message });
             return;
         }
-
+        
         console.error(err);
         res.status(500).send({ error: "Server error" });
     });

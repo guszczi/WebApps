@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 const router = require('express').Router();
 
 const db = require('../models/database');
@@ -51,6 +53,15 @@ router.post('/orders', (req, res) => {
     }).then(order => {
         getOrder(order.order_id, res);
     }).catch(err => {
+        if (err instanceof Sequelize.ForeignKeyConstraintError) {
+            res.status(400).send({ error: `Category with id=${req.body.category_id} does not exist` });
+            return;
+        }
+        else if (err instanceof Sequelize.ValidationError) {
+            res.status(400).send({ error: err.errors[0].message });
+            return;
+        }
+
         console.error(err);
         res.status(500).send({ error: "Server error" });
     });
@@ -68,6 +79,15 @@ router.put('/orders/:id/:state', (req, res) => {
             res.send({ message: 'Order not found or there is nothing to change' });
         }
     }).catch(err => {
+        if (err instanceof Sequelize.ForeignKeyConstraintError) {
+            res.status(400).send({ error: `Category with id=${req.body.category_id} does not exist` });
+            return;
+        }
+        else if (err instanceof Sequelize.ValidationError) {
+            res.status(400).send({ error: err.errors[0].message });
+            return;
+        }
+
         console.error(err);
         res.status(500).send({ error: "Server error" });
     });
