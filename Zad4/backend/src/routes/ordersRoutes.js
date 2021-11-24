@@ -67,13 +67,12 @@ router.post('/orders', (req, res) => {
     });
 })
 
-// TODO: fix
 router.put('/orders/:id/:state', (req, res) => {
-    Orders.update({ state_id: req.params.state_id }, {
+    Orders.update({ state_id: req.params.state }, {
         where: { order_id: req.params.id }
     }).then(num => {
         if (num == 1) {
-            res.send({ message: 'Order updated' });
+            getOrder(req.params.id, res);
         }
         else {
             res.send({ message: 'Order not found or there is nothing to change' });
