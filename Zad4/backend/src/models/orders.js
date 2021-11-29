@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./database');
 
 const States = require('./states');
+const OrderLists = require('./orderlists');
 
 const Orders = db.define('orders', {
     order_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -24,6 +25,7 @@ const Orders = db.define('orders', {
 });
 
 Orders.belongsTo(States, { foreignKey: 'state_id' });
+Orders.hasMany(OrderLists, { foreignKey: 'order_id' });
 
 Orders.sync();
 

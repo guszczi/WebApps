@@ -11,9 +11,8 @@ const OrderLists = db.define('order_lists', {
     quantity: { type: Sequelize.INTEGER, allowNull: false },
 });
 
-OrderLists.belongsTo(Orders, { foreignKey: 'order_id' });
 OrderLists.belongsTo(Products, { foreignKey: 'product_id' });
 
 OrderLists.sync();
 
-module.exports = Orders;
+module.exports = OrderLists;
