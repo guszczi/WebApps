@@ -127,7 +127,12 @@ router.post('/orders/:id/', (req, res) => {
         getOrder(req.params.id, res);
     }).catch(err => {
         if (err instanceof Sequelize.ForeignKeyConstraintError) {
-            res.status(400).send({ error: `Order with id=${req.params.id} does not exist` });
+            if (err.index === "order_lists_ibfk_2") {
+                res.status(400).send({ error: `Product with id=${req.body.product_id} does not exist` });
+            }
+            else {
+                res.status(400).send({ error: `Order with id=${req.params.id} does not exist` });
+            }
             return;
         }
         else if (err instanceof Sequelize.ValidationError) {
