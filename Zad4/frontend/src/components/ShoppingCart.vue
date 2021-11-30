@@ -1,9 +1,14 @@
 <template>
-    <div class="container">
-        <button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-            Shopping Cart
-        </button>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">IT shop</span>
 
+        <button type="button" class="btn btn-white float-right btn-cart" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+            <i class="bi-cart"></i>
+            <span class="cart-size" v-if="products.length">{{ products.length }}</span>
+        </button>
+    </nav>
+
+    <div class="container">
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -14,22 +19,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <table>
+                        <table class="table-condensed table-hover table table-striped table-responsive table-sm">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Total price</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="item in products" :key="item.product_id">
                                     <td>{{item.name}}</td>
                                     <td>{{item.quantity}}</td>
-                                    <td>{{total(item)}}</td>
-                                    <td @click="addQuantity(item)">+</td>
-                                    <td @click="decrementQuantity(item)">-</td>
-                                    <td @click="removeItem(item.product_id)">Remove</td>
+                                    <td>{{total(item)}} PLN</td>
+                                    <td class="action">
+                                        <span @click="addQuantity(item)"><i class="bi-plus-square"></i></span>
+                                        <span @click="decrementQuantity(item)"><i class="bi-dash-square"></i></span>
+                                        <span @click="removeItem(item.product_id)"><i class="bi-cart-x-fill"></i></span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -50,7 +58,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <div>Your final price is: {{getFinalPrice()}}</div>
+                        <div>Your final price is: {{getFinalPrice()}} PLN</div>
                         <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" @click="sendData" class="btn btn-primary">Order now!</button>
                     </div>
