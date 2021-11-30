@@ -14,6 +14,7 @@
     ],
     "license": "UNLICENSE",
     "dependencies": {
+        "axios": "^0.24.0",
         "cookie-parser": "^1.4.4",
         "cors": "^2.8.5",
         "express": "^4.17.1",
@@ -27,6 +28,7 @@
         "morgan": "^1.9.1",
         "mysql2": "^1.7.0",
         "rotating-file-stream": "^1.4.6",
-        "sequelize": "^5.19.2"
+        "sequelize": "^6.11.0",
+        "vue-axios": "^3.4.0"
     }
 }
