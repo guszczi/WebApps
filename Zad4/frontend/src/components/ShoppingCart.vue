@@ -76,12 +76,7 @@
                     username: '',
                     email: '',
                     phone: '',
-                },
-                order: {
-                    product_id: '',
-                    quantity: '',
-                },
-                orderID: '',
+                }
             }
         },
 
@@ -102,29 +97,34 @@
                 this.posts.date = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
                 
                 this.axios.post('http://127.0.0.1:3000/orders', this.posts).then(result => 
-                    {
-                        console.log('success order');
-                        this.orderID = result.data.order_id;
-                        console.log('http://127.0.0.1:3000/orders/'+this.orderID);
-                    }).catch(error => {
-                        alert(error.response.data.error);
-                    });
-                
-                for (var product of this.products) {
-                    
-                    this.order.product_id = product.product_id;
-                    this.order.quantity = product.quantity;
-                    
-                    var link = 'http://127.0.0.1:3000/orders/' + this.orderID;
-                    
-                    this.axios.post(link, this.order).then(result => 
+                {
+                    console.log('success order');
+                    let orderID = result.data.order_id;
+                    console.log('http://127.0.0.1:3000/orders/' + orderID);
+
+                    for (var product of this.products) {
+                        
+                        let order = {
+                            'product_id': product.product_id,
+                            'quantity': product.quantity,
+                        }
+
+                        var link = 'http://127.0.0.1:3000/orders/' + orderID;
+                        
+                        this.axios.post(link, order).then(result => 
                         {
                             console.log('success orderlist', result);
                         }).catch(error => {
                             alert(error.response.data.error);
                         });
-                }
-                this.order = [];
+                    }
+
+                }).catch(error => {
+                    alert(error.response.data.error);
+                }).finally(() => {
+                    this.products = [];
+                    // TODO: Add overlay cloosing mechanism - no product nothing in cart
+                });
             },
             total: function(item) {
                 return (item.price * item.quantity).toFixed(2);
