@@ -1,13 +1,23 @@
 <template>
     <div class="container">
         <h1>All products</h1>
-        <input type="text" v-model="search" placeholder="search" />
-        <select v-model="selected">
-            <option value="all">Choose category</option>
-            <option v-for="(item, index) in categories" :key="index" v-bind:value="item.category_id">{{item.name}}</option>
-        </select>
-        <table class="table-condensed table-hover">
-        <thead>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+            </div>
+            <input class="form-control" type="text" v-model="search" placeholder="search" />
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+            </div>
+            <select class="form-control" v-model="selected">
+                <option value="all">Choose category</option>
+                <option v-for="(item, index) in categories" :key="index" v-bind:value="item.category_id">{{item.name}}</option>
+            </select>
+        </div>
+
+        <table class="table-condensed table-hover table table-striped table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th class="col-md-4">Name</th>
                 <th class="col-md-4">Description</th>
@@ -17,10 +27,10 @@
         </thead>
         <tbody>
             <tr v-for="item in filteredProducts" :key="item.product_id">
-                <td>{{item.name}}</td>
-                <td>{{item.description}}</td>
-                <td>{{item.price.toFixed(2)}}</td>
-                <td @click="addToCart(item.product_id)">Buy now</td>
+                <td class="align-middle">{{item.name}}</td>
+                <td class="align-middle">{{item.description}}</td>
+                <td class="align-middle">{{item.price.toFixed(2)}} PLN</td>
+                <td class="align-middle" @click="addToCart(item.product_id)">Buy now</td>
             </tr>
         </tbody>
         </table>
