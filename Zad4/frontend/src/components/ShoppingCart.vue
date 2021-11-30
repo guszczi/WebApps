@@ -92,43 +92,46 @@
         
         methods: {
             sendData: function() {
-                const current = new Date();
-                var isError = false;
-                
-                this.posts.date = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
-                
-                this.axios.post('http://127.0.0.1:3000/orders', this.posts).then(result => 
+                if (this.validate())
                 {
-                    console.log('success order');
-                    let orderID = result.data.order_id;
+                    const current = new Date();
+                    var isError = false;
+                    
+                    this.posts.date = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
+                    
+                    this.axios.post('http://127.0.0.1:3000/orders', this.posts).then(result => 
+                    {
+                        console.log('success order');
+                        let orderID = result.data.order_id;
 
-                    for (var product of this.products) {
-                        
-                        let order = {
-                            'product_id': product.product_id,
-                            'quantity': product.quantity,
+                        for (var product of this.products) {
+                            
+                            let order = {
+                                'product_id': product.product_id,
+                                'quantity': product.quantity,
+                            }
+
+                            var link = 'http://127.0.0.1:3000/orders/' + orderID;
+                            
+                            this.axios.post(link, order).then(result => 
+                            {
+                                console.log('success orderlist', result);
+                            }).catch(error => {
+                                alert(error.response.data.error);
+                            });
                         }
 
-                        var link = 'http://127.0.0.1:3000/orders/' + orderID;
-                        
-                        this.axios.post(link, order).then(result => 
+                    }).catch(error => {
+                        alert(error.response.data.error);
+                        isError = true;
+                    }).finally(() => {
+                        if (!isError) 
                         {
-                            console.log('success orderlist', result);
-                        }).catch(error => {
-                            alert(error.response.data.error);
-                        });
-                    }
-
-                }).catch(error => {
-                    alert(error.response.data.error);
-                    isError = true;
-                }).finally(() => {
-                    if (!isError) 
-                    {
-                        this.products = [];
-                        document.getElementById('close').click();
-                    }
-                });
+                            this.products = [];
+                            document.getElementById('close').click();
+                        }
+                    });
+                }
             },
             total: function(item) {
                 return (item.price * item.quantity).toFixed(2);
@@ -153,6 +156,28 @@
                     result += parseFloat(this.total(product));
                 }
                 return result.toFixed(2);
+            },
+            validate: function() {
+                var errors = [];
+                if (this.products.length == 0) errors.push("Cart can't be empty");
+                if (!this.isUsername(this.posts.username)) errors.push("Invalid username");
+                if (!this.isMail(this.posts.email)) errors.push("Invalid email");
+                if (!this.isPhoneNumber(this.posts.phone)) errors.push("Invalid phone number");
+                if (errors.length != 0) alert(errors);
+                return errors.length == 0;
+            },
+            isUsername: function(str) {
+                return !/[`!@#$%^&*()_+\-={};':"|,.<>?~]/.test(str) && str.length != 0;
+            },
+            isMail: function(str) {
+                return /^(?:[\w-]+\.?)*[\w-]+@(?:[\w-]+\.)+[\w]{2,3}$/.test(str);    
+            },
+            isPhoneNumber: function(number) {
+                try {
+                    return number.match(/\d/g).length === 9;
+                } catch (error) {
+                    return false;
+                }
             }
 
         },
