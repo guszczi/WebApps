@@ -66,3 +66,9 @@ INSERT INTO `aji`.`categories` (`category_id`, `name`) VALUES
 (9, 'Mouse'), 
 (10, 'Cases'), 
 (10, 'CPU Coolers'), 
+
+INSERT INTO `aji`.`products` (`name`, `description`, `price`, `weight`, `category_id`) VALUES
+('Razer Deathadder Chroma', 'For gamers by gamers', 55.3, 122.5, 9),
+('Zowie FK1', 'Good mouse', 299.99, 74, 9),
+('QPad MK-50', 'Very good keyboard', 254.99, 598.55, 8),
+('Samsung EVO 970 PRO', 'Super fast drive', 699.99, 71.25, 6),
