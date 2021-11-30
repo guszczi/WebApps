@@ -54,7 +54,8 @@
 
         methods: {
             addToCart: function(index) {
-                emitter.emit('shoppingList', this.products[index-1])
+                var product = this.products.find(product => product.product_id == index);
+                emitter.emit('shoppingList', product)
             }
         },
 
