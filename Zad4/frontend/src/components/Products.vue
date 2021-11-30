@@ -4,11 +4,11 @@
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">@</span>
+                <span class="input-group-text" id="basic-addon1"><i class="bi-search"></i></span>
             </div>
             <input class="form-control" type="text" v-model="search" placeholder="search" />
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">@</span>
+                <span class="input-group-text" id="basic-addon1"><i class="bi-tag"></i></span>
             </div>
             <select class="form-control" v-model="selected">
                 <option value="all">Choose category</option>
@@ -30,7 +30,7 @@
                 <td class="align-middle">{{item.name}}</td>
                 <td class="align-middle">{{item.description}}</td>
                 <td class="align-middle">{{item.price.toFixed(2)}} PLN</td>
-                <td class="align-middle" @click="addToCart(item.product_id)">Buy now</td>
+                <td class="align-middle add-to-cart" @click="addToCart(item.product_id)"><i class="bi-bag-plus-fill"></i></td>
             </tr>
         </tbody>
         </table>

@@ -28,4 +28,13 @@ export default
     color: #2c3e50;
     margin-top: 60px;
 }
+.add-to-cart {
+    cursor: pointer;
+}
+.add-to-cart i {
+    transition: 0.2s all ease;
+}
+.add-to-cart:hover i {
+    color: #3399FF;
+}
 </style>
