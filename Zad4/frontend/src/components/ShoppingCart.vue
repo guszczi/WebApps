@@ -51,7 +51,7 @@
                     </div>
                     <div class="modal-footer">
                         <div>Your final price is: {{getFinalPrice()}}</div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" @click="sendData" class="btn btn-primary">Order now!</button>
                     </div>
                 </div>
@@ -93,6 +93,7 @@
         methods: {
             sendData: function() {
                 const current = new Date();
+                var isError = false;
                 
                 this.posts.date = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
                 
@@ -100,7 +101,6 @@
                 {
                     console.log('success order');
                     let orderID = result.data.order_id;
-                    console.log('http://127.0.0.1:3000/orders/' + orderID);
 
                     for (var product of this.products) {
                         
@@ -121,9 +121,13 @@
 
                 }).catch(error => {
                     alert(error.response.data.error);
+                    isError = true;
                 }).finally(() => {
-                    this.products = [];
-                    // TODO: Add overlay cloosing mechanism - no product nothing in cart
+                    if (!isError) 
+                    {
+                        this.products = [];
+                        document.getElementById('close').click();
+                    }
                 });
             },
             total: function(item) {
