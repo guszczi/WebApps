@@ -65,7 +65,7 @@ INSERT INTO `aji`.`categories` (`category_id`, `name`) VALUES
 (8, 'Keyboards'), 
 (9, 'Mouse'), 
 (10, 'Cases'), 
-(10, 'CPU Coolers'), 
+(10, 'CPU Coolers');
 
 INSERT INTO `aji`.`products` (`name`, `description`, `price`, `weight`, `category_id`) VALUES
 ('Gigabyte GeForce RTX 3060 Ti', 'Imagine if you could afford it', 4399.00, 853.44, 1),
@@ -123,7 +123,7 @@ INSERT INTO `aji`.`products` (`name`, `description`, `price`, `weight`, `categor
 ('SilentiumPC Fera 6', 'Very good and cheap', 155.00, 311.85, 11),
 ('SilentiumPC Fera 7', 'Very good and cheap', 165.00, 321.85, 11),
 ('SilentiumPC Fera 8', 'Very good and cheap', 175.00, 361.85, 11),
-('SilentiumPC Fera 9', 'Very good and cheap', 195.00, 391.85, 11),
+('SilentiumPC Fera 9', 'Very good and cheap', 195.00, 391.85, 11);
 
 
 
