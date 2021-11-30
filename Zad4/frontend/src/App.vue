@@ -28,8 +28,13 @@ export default
     color: #2c3e50;
 }
 nav {
-    margin-bottom: 20px;
     padding: 15px;
+}
+.navwrap {
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
 }
 .add-to-cart {
     cursor: pointer;

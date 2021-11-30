@@ -1,12 +1,14 @@
 <template>
-    <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1">IT shop</span>
+    <div class="navwrap">
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1">IT shop</span>
 
-        <button type="button" class="btn btn-white float-right btn-cart" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-            <i class="bi-cart"></i>
-            <span class="cart-size" v-if="products.length">{{ products.length }}</span>
-        </button>
-    </nav>
+            <button type="button" class="btn btn-white float-right btn-cart" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                <i class="bi-cart"></i>
+                <span class="cart-size" v-if="totalCount()">{{ totalCount() }}</span>
+            </button>
+        </nav>
+    </div>
 
     <div class="container">
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -143,6 +145,13 @@
             },
             total: function(item) {
                 return (item.price * item.quantity).toFixed(2);
+            },
+            totalCount: function() {
+                let total = 0;
+                this.products.forEach(item => {
+                    total += item.quantity;
+                });
+                return total;
             },
             addQuantity: function(item) {
                 item.quantity += 1;

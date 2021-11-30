@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="padding-top: 100px;">
         <h1>All products</h1>
 
         <div class="input-group">
