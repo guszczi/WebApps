@@ -92,10 +92,12 @@
 
         created() {
             emitter.on('shoppingList', product => {
-                if (!this.products.includes(product)) 
-                {
+                if (!this.products.includes(product)) {
                     product['quantity'] = 1;
                     this.products.push(product);
+                }
+                else {
+                    this.addQuantity(this.products.find(x => x.product_id == product.product_id));
                 }
             });
         },
