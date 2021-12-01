@@ -19,10 +19,11 @@
         <table class="table-condensed table-hover table table-striped table-responsive">
         <thead class="thead-dark">
             <tr>
-                <th class="col-md-4" style="width: 30%">Name</th>
-                <th class="col-md-4" style="width: 30%">Description</th>
-                <th class="col-md-4" style="width: 20%">Price</th>
-                <th class="col-md-4" style="width: 20%">Category</th>
+                <th class="col-md-4" style="width: 28%">Name</th>
+                <th class="col-md-4" style="width: 25%">Description</th>
+                <th class="col-md-4" style="width: 14%">Price</th>
+                <th class="col-md-4" style="width: 18%">Category</th>
+                <th class="col-md-4" style="width: 14%">Weight</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +44,12 @@
                     <select class="form-control">
                         <option v-for="(i, index) in categories" :key="index" :selected="i.category_id === item.category.category_id">{{i.name}}</option>
                     </select>
+                </td>
+                <td class="align-middle">
+                    <div class="center">
+                        <input type="number" v-model="item.weight" class="form-control" step="0.01" min="0" />
+                        KG
+                    </div>
                 </td>
             </tr>
         </tbody>
