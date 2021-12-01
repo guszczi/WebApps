@@ -41,8 +41,8 @@
                     </div>
                 </td>
                 <td class="align-middle">
-                    <select class="form-control">
-                        <option v-for="(i, index) in categories" :key="index" :selected="i.category_id === item.category.category_id">{{i.name}}</option>
+                    <select class="form-control" @change="switchSelect($event)">
+                        <option v-for="i in categories" :key="i.category_id" :selected="i.category_id === item.category.category_id" >{{i.name}}</option>
                     </select>
                 </td>
                 <td class="align-middle">
@@ -50,6 +50,9 @@
                         <input type="number" v-model="item.weight" class="form-control" step="0.01" min="0" />
                         KG
                     </div>
+                </td>
+                <td class="align-middle">
+                    <button type="button" class="btn btn-outline-secondary" @click="sendData(item)">Update</button>
                 </td>
             </tr>
         </tbody>
@@ -67,11 +70,31 @@
                 products: [],
                 categories: [],
                 search: '',
-                selected: 'all'
+                selected: 'all',
+                cat: ''
             }
         },
 
         methods: {
+            sendData: function(i) {
+                var request = {
+                    product_id: i.product_id,
+                    name: i.name,
+                    description: i.description,
+                    price: i.price,
+                    weight: i.weight,
+                    category_id: this.cat,
+                };
+                this.axios.put('http://127.0.0.1:3000/products/'+request.product_id, request).then(result => {
+                    console.log("update success", result);
+                    if(!alert('Successfully updated ' + request.name)){window.location.reload();}
+                }).catch(error => {
+                    alert(error.response.data.error);
+                });
+            },
+            switchSelect: function() {
+                this.cat = this.categories.find(x => x.name == event.target.value).category_id;
+            },
         },
 
         computed: {
