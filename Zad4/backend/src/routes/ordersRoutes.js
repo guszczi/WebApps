@@ -30,27 +30,6 @@ const getOrder = (id, res) => {
 }
 
 router.get('/orders', (req, res) => {
-    if (req.body.state_id) {
-        Orders.findAll({
-            where: { state_id: req.body.state_id },
-            attributes: {
-                exclude: ['state_id']
-            },
-            include: [{
-                model: States
-            }, {
-                model: OrderLists
-            }]
-        }).then(orders => {
-            res.send(orders);
-        }).catch(err => {
-            console.error(err);
-            res.status(500).send({ error: "Server error" });
-        });
-
-        return;
-    }
-
     Orders.findAll({
         attributes: {
             exclude: ['state_id']
