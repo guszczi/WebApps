@@ -41,7 +41,7 @@
                     </div>
                 </td>
                 <td class="align-middle">
-                    <select class="form-control" @change="switchSelect($event)">
+                    <select class="form-control" @change="switchSelect($event, item)">
                         <option v-for="i in categories" :key="i.category_id" :selected="i.category_id === item.category.category_id" >{{i.name}}</option>
                     </select>
                 </td>
@@ -71,7 +71,6 @@
                 categories: [],
                 search: '',
                 selected: 'all',
-                cat: ''
             }
         },
 
@@ -83,7 +82,7 @@
                     description: i.description,
                     price: i.price,
                     weight: i.weight,
-                    category_id: this.cat,
+                    category_id: (i.categoryToChange === undefined) ? i.category.category_id : i.categoryToChange,
                 };
                 this.axios.put('http://127.0.0.1:3000/products/'+request.product_id, request).then(result => {
                     console.log("update success", result);
@@ -92,8 +91,8 @@
                     alert(error.response.data.error);
                 });
             },
-            switchSelect: function() {
-                this.cat = this.categories.find(x => x.name == event.target.value).category_id;
+            switchSelect: function(event, item) {
+                item['categoryToChange'] = this.categories.find(x => x.name == event.target.value).category_id;
             },
         },
 
