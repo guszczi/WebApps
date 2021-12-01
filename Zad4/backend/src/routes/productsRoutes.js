@@ -2,6 +2,9 @@ const Sequelize = require('sequelize');
 
 const router = require('express').Router();
 
+const cors = require('cors');
+const corsOptions = require('../util/corsOptions');
+
 const db = require('../models/database');
 const Products = require('../models/products');
 
@@ -44,7 +47,7 @@ router.get('/products/:id', (req, res) => {
     getProduct(req.params.id, res);
 })
 
-router.post('/products', (req, res) => {
+router.post('/products', cors(corsOptions), (req, res) => {
     Products.create({
         name: req.body.name,
         description: req.body.description,
@@ -68,7 +71,7 @@ router.post('/products', (req, res) => {
     });
 })
 
-router.put('/products/:id', (req, res) => {
+router.put('/products/:id', cors(corsOptions), (req, res) => {
     Products.update(req.body, {
         where: { product_id: req.params.id }
     }).then(num => {
