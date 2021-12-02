@@ -32,11 +32,11 @@
                     {{item.name}}
                 </td>
                 <td class="align-middle">
-                    <input type="text" v-model="item.description" class="form-control" />
+                    <input type="text" v-model="item.description" @change="changed(item)" class="form-control" />
                 </td>
                 <td class="align-middle">
                     <div class="center">
-                        <input type="number" v-model="item.price" class="form-control" step="0.01" min="0" />
+                        <input type="number" v-model="item.price" @change="changed(item)" class="form-control" step="0.01" min="0" />
                         PLN
                     </div>
                 </td>
@@ -47,12 +47,12 @@
                 </td>
                 <td class="align-middle">
                     <div class="center">
-                        <input type="number" v-model="item.weight" class="form-control" step="0.01" min="0" />
+                        <input type="number" v-model="item.weight" @change="changed(item)" class="form-control" step="0.01" min="0" />
                         KG
                     </div>
                 </td>
                 <td class="align-middle">
-                    <button type="button" class="btn btn-outline-secondary" @click="sendData(item)">Update</button>
+                    <button type="button" :disabled="!item.changed" class="btn btn-outline-secondary" @click="sendData(item)">Update</button>
                 </td>
             </tr>
         </tbody>
@@ -93,7 +93,11 @@
             },
             switchSelect: function(event, item) {
                 item['categoryToChange'] = this.categories.find(x => x.name == event.target.value).category_id;
+                item['changed'] = true;
             },
+            changed: function(item) {
+                item['changed'] = true;
+            }
         },
 
         computed: {
@@ -104,7 +108,7 @@
                 
                     return item.name.toLowerCase().match(this.search.toLowerCase())
                 });
-            }
+            },
         },
 
         mounted() {
