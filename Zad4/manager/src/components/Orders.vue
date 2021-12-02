@@ -73,16 +73,16 @@ export default
         }
     },
 
-    async mounted() {
-        await this.axios.get('http://127.0.0.1:3000/orders').then((resp => {
-            this.orders = resp.data;
-        }));
-        await this.axios.get('http://127.0.0.1:3000/products').then((resp => {
+    mounted() {
+        this.axios.get('http://127.0.0.1:3000/products').then(resp => {
             this.products = resp.data;
-        }));
-        await this.axios.get('http://127.0.0.1:3000/states').then((resp => {
+        });
+        this.axios.get('http://127.0.0.1:3000/orders').then(resp => {
+            this.orders = resp.data;
+        });
+        this.axios.get('http://127.0.0.1:3000/states').then(resp => {
             this.states = resp.data;
-        }));
+        });
     },
 
     methods: {
