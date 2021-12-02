@@ -1,19 +1,17 @@
 <template>
     <Navbar />
-    <Products />
 </template>
 
 <script>
-import Products from './components/Products.vue'
-import Navbar from './components/Navbar.vue'
+import Navbar from './components/Navbar'
+
 
 export default 
 {
     name: 'App',
     components: 
     {
-        Products,
-        Navbar,
+        Navbar
     }
 }
 </script>
@@ -26,6 +24,9 @@ export default
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+}
+.container {
+    padding-top: 100px;
 }
 nav {
     padding: 15px;

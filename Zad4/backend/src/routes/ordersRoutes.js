@@ -76,7 +76,7 @@ router.post('/orders', (req, res) => {
 });
 
 router.put('/orders/:id/:state/', (req, res) => {
-    Orders.findOne({ where: { order_id: req.params.id }}).then(order => { 
+    Orders.findOne({ where: { order_id: req.params.id } }).then(order => {
 
         if (!order) {
             res.status(404).send({ error: "Order does not exist" });
@@ -90,6 +90,11 @@ router.put('/orders/:id/:state/', (req, res) => {
 
         if (req.params.state < order.state_id) {
             res.status(400).send({ error: "Order state cannot be changed to previous one!" });
+            return;
+        }
+
+        if (order.state_id === 4) {
+            res.status(400).send({ error: "Order has been completed - cannot change state!" });
             return;
         }
 
@@ -111,7 +116,7 @@ router.put('/orders/:id/:state/', (req, res) => {
                 res.status(400).send({ error: err.errors[0].message });
                 return;
             }
-    
+
             console.error(err);
             res.status(500).send({ error: "Server error" });
         });
@@ -149,7 +154,7 @@ router.post('/orders/:id/', (req, res) => {
 });
 
 router.put('/orders/:id/', cors(corsOptions), (req, res) => {
-    Orders.findOne({ where: { order_id: req.params.id }}).then(order => { 
+    Orders.findOne({ where: { order_id: req.params.id } }).then(order => {
 
         if (!order) {
             res.status(404).send({ error: "Order does not exist" });
@@ -174,7 +179,7 @@ router.put('/orders/:id/', cors(corsOptions), (req, res) => {
                 res.status(400).send({ error: err.errors[0].message });
                 return;
             }
-    
+
             console.error(err);
             res.status(500).send({ error: "Server error" });
         });

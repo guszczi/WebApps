@@ -86,7 +86,7 @@
                 };
                 this.axios.put('http://127.0.0.1:3000/products/'+request.product_id, request).then(result => {
                     console.log("update success", result);
-                    if(!alert('Successfully updated ' + request.name)){window.location.reload();}
+                    alert('Successfully updated ' + request.name);
                 }).catch(error => {
                     alert(error.response.data.error);
                 });
