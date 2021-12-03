@@ -41,7 +41,7 @@
                     </div>
                 </td>
                 <td class="align-middle">
-                    <select class="form-control" @change="switchSelect($event, item)">
+                    <select v-bind:id="'select_' + item.product_id" class="form-control" @change="switchSelect($event, item)">
                         <option v-for="i in categories" :key="i.category_id" :selected="i.category_id === item.category.category_id" >{{i.name}}</option>
                     </select>
                 </td>
@@ -54,6 +54,9 @@
                 <td class="align-middle">
                     <button type="button" v-if="!item.changed" :disabled="!item.changed" class="btn btn-outline-secondary">Update</button>
                     <button type="button" v-if="item.changed" class="btn btn-primary" @click="sendData(item)">Update</button>
+                </td>
+                <td class="align-middle">
+                    <button type="button" :disabled="!item.changed" class="btn btn-outline-secondary" @click="cancelChange(item)"><i class="bi bi-arrow-return-left"></i></button>
                 </td>
             </tr>
         </tbody>
@@ -116,6 +119,12 @@
             changed: function(item) {
                 item['changed'] = !this.isOriginalValue(item);
             },
+            cancelChange: function(item) {
+                let index = this.products.findIndex(x => x.product_id == item.product_id);
+                this.products[index] = _.cloneDeep(this.original_products_cache[index]);
+
+                document.querySelector('#select_' + item.product_id).value = item.category.name;
+            }
         },
 
         computed: {
