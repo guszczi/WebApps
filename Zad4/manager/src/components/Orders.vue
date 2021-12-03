@@ -99,7 +99,8 @@ export default
             this.axios.put('http://127.0.0.1:3000/orders/'+item.order_id+'/4').then(result => {
                 console.log("update success", result);
                 alert(`Successfully completed order ${item.order_id}!`);
-                item.state.state_id = 4;
+                
+                this.orders[this.orders.findIndex(x => x.order_id == item.order_id)] = result.data;
             }).catch(error => {
                 alert(error.response.data.error);
             });
@@ -112,7 +113,8 @@ export default
             this.axios.put('http://127.0.0.1:3000/orders/'+item.order_id+'/3').then(result => {
                 console.log("update success", result);
                 alert(`Successfully cancelled order ${item.order_id}!`);
-                item.state.state_id = 3;
+                
+                this.orders[this.orders.findIndex(x => x.order_id == item.order_id)] = result.data;
             }).catch(error => {
                 alert(error.response.data.error);
             });
