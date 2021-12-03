@@ -92,6 +92,9 @@
                     console.log("update success", result);
                     alert('Successfully updated ' + request.name);
                     i.changed = false;
+                    
+                    this.products[this.products.findIndex(x => x.product_id == i.product_id)] = result.data;
+                    this.original_products_cache[this.original_products_cache.findIndex(x => x.product_id == i.product_id)] = _.cloneDeep(result.data); 
                 }).catch(error => {
                     alert(error.response.data.error);
                 });
@@ -100,9 +103,10 @@
                 let stripped_item = _.omit(item, ['changed']);
                 let cache = this.original_products_cache.find(x => x.product_id == item.product_id);
 
-                if (!_.isUndefined(stripped_item.categoryToChange) && stripped_item.categoryToChange == cache.category.category_id) {
+                if (!_.isUndefined(stripped_item.categoryToChange) && item.categoryToChange == cache.category.category_id) {
                     stripped_item = _.omit(stripped_item, ['categoryToChange']);
                 }
+
                 return _.isEqual(stripped_item, cache);
             },
             switchSelect: function(event, item) {
