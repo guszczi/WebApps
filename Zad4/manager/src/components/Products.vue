@@ -52,7 +52,8 @@
                     </div>
                 </td>
                 <td class="align-middle">
-                    <button type="button" :disabled="!item.changed" class="btn btn-outline-secondary" @click="sendData(item)">Update</button>
+                    <button type="button" v-if="!item.changed" :disabled="!item.changed" class="btn btn-outline-secondary">Update</button>
+                    <button type="button" v-if="item.changed" class="btn btn-primary" @click="sendData(item)">Update</button>
                 </td>
             </tr>
         </tbody>
@@ -61,12 +62,15 @@
 </template>
 
 <script>
+    import _ from 'lodash';
+
     export default 
     {
         name: "Products",
 
         data() {
             return {
+                original_products_cache: [],
                 products: [],
                 categories: [],
                 search: '',
@@ -87,17 +91,27 @@
                 this.axios.put('http://127.0.0.1:3000/products/'+request.product_id, request).then(result => {
                     console.log("update success", result);
                     alert('Successfully updated ' + request.name);
+                    i.changed = false;
                 }).catch(error => {
                     alert(error.response.data.error);
                 });
             },
+            isOriginalValue: function(item) {
+                let stripped_item = _.omit(item, ['changed']);
+                let cache = this.original_products_cache.find(x => x.product_id == item.product_id);
+
+                if (!_.isUndefined(stripped_item.categoryToChange) && stripped_item.categoryToChange == cache.category.category_id) {
+                    stripped_item = _.omit(stripped_item, ['categoryToChange']);
+                }
+                return _.isEqual(stripped_item, cache);
+            },
             switchSelect: function(event, item) {
                 item['categoryToChange'] = this.categories.find(x => x.name == event.target.value).category_id;
-                item['changed'] = true;
+                item['changed'] = !this.isOriginalValue(item);
             },
             changed: function(item) {
-                item['changed'] = true;
-            }
+                item['changed'] = !this.isOriginalValue(item);
+            },
         },
 
         computed: {
@@ -117,6 +131,7 @@
             }))
             this.axios.get('http://127.0.0.1:3000/products').then((resp => {
                 this.products = resp.data;
+                this.original_products_cache = _.cloneDeep(resp.data);
             }))
         },
     };

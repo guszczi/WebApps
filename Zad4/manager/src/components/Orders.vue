@@ -42,17 +42,22 @@
                     {{item.state.name}}
                 </td>
                 <td class="align-middle">
-                    {{item.date}}
+                    {{item.date.split('T')[0]}}
                 </td>
                 <td class="align-middle">
-                    <div v-for="orderItem in item.order_lists" :key="orderItem.product_id">
-                        <span>{{this.products.find(x => x.product_id === orderItem.product_id).name}} - {{orderItem.quantity}}x</span>
+                    <ul class="smaller-font">
+                        <li v-for="orderItem in item.order_lists" :key="orderItem.product_id">
+                            <span>{{this.products.find(x => x.product_id === orderItem.product_id).name}} - {{orderItem.quantity}}x</span>
+                        </li>
+                    </ul>
+                </td>
+                <td class="align-middle" v-if="item.state.state_id == 1">
+                    <div class="center">
+                        <button type="button" class="btn btn-outline-secondary" @click="setCompleted(item)"><i class="bi-check"></i></button>
+                        <button type="button" class="btn btn-outline-secondary" @click="setCancelled(item)"><i class="bi-dash"></i></button>
                     </div>
                 </td>
-                <td class="align-middle">
-                    <button type="button" class="btn btn-outline-secondary" @click="setCompleted(item)">Complete</button>
-                    <button type="button" class="btn btn-outline-secondary" @click="setCancelled(item)">Cancel</button>
-                </td>
+                <td class="align-middle" v-if="item.state.state_id != 1"></td>
             </tr>
         </tbody>
         </table>
@@ -87,20 +92,30 @@ export default
 
     methods: {
         setCompleted: function(item) {
+            if (!confirm('Are you sure you want to set this order as completed?')) {
+                return;
+            }
+
             this.axios.put('http://127.0.0.1:3000/orders/'+item.order_id+'/4').then(result => {
                 console.log("update success", result);
-                    alert(`Successfully completed order ${item.order_id}!`);
-                }).catch(error => {
-                    alert(error.response.data.error);
-                });
+                alert(`Successfully completed order ${item.order_id}!`);
+                item.state.state_id = 4;
+            }).catch(error => {
+                alert(error.response.data.error);
+            });
         },
         setCancelled: function(item) {
+            if (!confirm('Are you sure you want to set this order as cancelled?')) {
+                return;
+            }
+
             this.axios.put('http://127.0.0.1:3000/orders/'+item.order_id+'/3').then(result => {
                 console.log("update success", result);
-                    alert(`Successfully cancelled order ${item.order_id}!`);
-                }).catch(error => {
-                    alert(error.response.data.error);
-                });
+                alert(`Successfully cancelled order ${item.order_id}!`);
+                item.state.state_id = 3;
+            }).catch(error => {
+                alert(error.response.data.error);
+            });
         },
         
     },

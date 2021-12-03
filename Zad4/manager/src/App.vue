@@ -74,4 +74,7 @@ div.center {
     justify-content: center;
     align-items: center;
 }
+.smaller-font {
+    font-size: 12px;
+}
 </style>
